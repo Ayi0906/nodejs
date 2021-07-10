@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* reset start */
+        @font-face {
+            font-family: 'neo';
+            src: url('../font/Neo/NEOTERICc.ttf');
+        }
+
+        @font-face {
+            font-family: 'girl';
+            src: url('../font/ID初心少女体简.ttf');
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            font-family: 'neo', serif;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 30px 100px 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* reset end */
+
+        h1 {
+            font-size: 50px;
+            font-family: 'girl', serif;
+
+        }
+
+        span {
+            font-family: 'girl', serif;
+            font-size: 30px;
+            color: grey;
+            font-weight: normal;
+        }
+
+        hr {
+            margin: 50px 0 50px;
+        }
+
+        label>span {
+            display: block;
+            font-size: 25px;
+            color: grey;
+            margin-bottom: 15px;
+        }
+
+        label>input {
+            width: 100%;
+            height: 30px;
+            font-size: 25px;
+            border-radius: 5px;
+            border: 1px solid grey;
+            outline: none;
+            margin-bottom: 30px;
+            padding-left: 1em;
+            font-family: 'girl', serif;
+        }
+
+        textarea {
+            width: 100%;
+            height: 250px;
+            border: 1px solid grey;
+            border-radius: 5px;
+            resize: none;
+            font-size: 25px;
+            padding: 2px 1em 2px;
+            font-family: 'girl', serif;
+            outline: none;
+        }
+
+        #btn {
+            width: 120px;
+            height: 50px;
+            border: 0;
+            border-radius: 5px;
+            background-color: lightseagreen;
+            cursor: pointer;
+            font-family: 'girl', serif;
+            font-size: 25px;
+            transition: .3s;
+            margin-top: 5px;
+        }
+
+        #btn:hover {
+            background-color: seagreen;
+            box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>首页 <span>发表评论</span></h1>
+    <hr>
+    <label for="uname">
+        <span>你的名字</span>
+        <input type="text" name="uname" id="uname">
+    </label>
+    <label for="cmt">
+        <span>留言内容</span>
+        <textarea name="cmt" id="cmt" cols="100" rows="10"></textarea>
+    </label>
+    <button id="btn">发表留言</button>
+    <script>
+        const oBtn = document.getElementById('btn')
+        oBtn.addEventListener('click', function (e) {
+            const oUname = document.getElementById('uname')
+            const oCmts = document.getElementById('cmt')
+            let valid = chkVal(oUname, oCmts)
+            if (valid) {
+                let dataArr = [oUname, oCmts]
+                let url = 'http://127.0.0.1:3000/addcmt'
+                for (let i = 0; i < dataArr.length; i++) {
+                    url = addURLParam(url, dataArr[i].name, dataArr[i].value)
+                }
+                window.location.href = url
+            } else {
+                window.alert('用户名不应该为0，且内容应该大于5个字符')
+            }
+
+            function addURLParam(url, name, value) {
+                url += url.indexOf('?') === -1 ? "?" : "&"
+                url += encodeURIComponent(name) + '=' + encodeURIComponent(value)
+                return url
+            }
+        }, false)
+
+        function chkVal(oUname, oCmts) {
+            if (oUname.value.length === 0 || oCmts.value.length < 5) {
+                return false
+            } else {
+                return true
+            }
+        }
+    </script>
+</body>
+
+</html>
