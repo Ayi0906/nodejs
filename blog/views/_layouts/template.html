@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <title>{{title}}</title>
+    <style>
+        /* reset start */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            font-family: 'book', serif;
+        }
+
+        @font-face {
+            font-family: 'book';
+            src: url('../../public/font/义启书院体.ttf');
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* reset end */
+
+        #form {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+
+            /* transform: translate(-50%, -50%); */
+        }
+    </style>
+    {{block 'style'}}
+    {{/block}}
+</head>
+
+<body>
+    <div id="form">
+        <h1 class="text-center">{{header}}</h1>
+        {{include '../_partials/form.html'}}
+        {{block 'link'}}
+        {{/block}}
+    </div>
+    <script src="../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    {{block 'script'}}
+    {{/block}}
+</body>
+
+</html>

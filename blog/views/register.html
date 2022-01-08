@@ -1,0 +1,23 @@
+{{extend './_layouts/template.html'}}
+{{block 'link'}}
+<div class="border border-dark rounded col-4 offset-4 p-2 mt-2">
+    <span class="text-center">已有账号？<a href="/login" class="stretched-link">点击登录</a></span>
+</div>
+{{/block}}
+{{block 'script'}}
+<script>
+    $('#form1').on('submit', function (e) {
+        e.preventDefault()
+        let formData = $(this).serialize()
+        $.ajax({
+            url: '/register',
+            type: 'post',
+            data: formData,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+            }
+        })
+    })
+</script>
+{{/block}}

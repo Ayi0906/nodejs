@@ -1,0 +1,28 @@
+<form id="form1">
+    <div id="container" class="col-4 offset-4 border border-dark p-3 rounded">
+        {{if title==='注册页面'}}
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">昵称：</span>
+            </div>
+            <input type="text" class="form-control" placeholder="enter your username" aria-label="uname"
+                aria-describedby="basic-addon1" name="uname">
+        </div>
+        {{/if}}
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">邮箱：</span>
+            </div>
+            <input type="text" class="form-control" placeholder="enter your email" aria-label="email"
+                aria-describedby="basic-addon1" name="email">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">密码：</span>
+            </div>
+            <input type="password" class="form-control" placeholder="enter your password" aria-label="pwd"
+                aria-describedby="basic-addon1" name="pwd">
+        </div>
+        <button type="submit" class="btn btn-primary col-12">{{btnVal}}</button>
+    </div>
+</form>

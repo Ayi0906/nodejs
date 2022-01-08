@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+    <style>
+        /* reset start */
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button {
+            outline: none !important;
+        }
+
+        /* reset end */
+    </style>
+</head>
+<body>
+    省份：
+    <select id="province" name="province">
+        <option value="0">请选择省份</option>
+    </select>
+    <br>
+
+    市：
+    <select id="city" name="city">
+        <option value="0">请选择城市</option>
+    </select>
+    <br>
+    区/县：
+    <select id="county" name="county">
+        <option value="0">请选择区/县</option>
+    </select>
+
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script>
+        let $province = $('#province')
+        let $city = $('#city')
+        let $county = $('#county')
+        $(() => {
+            // 打开页面就请求中国所有的省份信息
+            $.get('http://127.0.0.1:3000/get_provinces', (result) => {
+                let {status, data, err} = result
+                if (status === 1) {
+                    let html = ''
+                    data.forEach((item, index) => {
+                        html += `<option value="${item.province}">${item.name}</option>`
+                    })
+                    $province.append(html)
+                } else {
+                    alert(err)
+                }
+            })
+
+            // 当省份选择框变化时 1. 获取所选省份的编码 2.发请求
+            $province.change(() => {
+                let province = $province.val()
+                if (province !== '0') {
+                    $.get('http://127.0.0.1:3000/get_cities_by_province', {province}, (result, text, xhr) => {
+                        let {status, data, error} = result
+                        if (status === 1) {
+                            let html = ''
+                            data.forEach((item, index) => {
+                                html += `<option value="${item.city}">${item.name}</option>`
+                            })
+                            $city.html('<option value=\'0\'>请选择城市</option>')
+                            $county.html('<option value=\'0\'>请选择城市</option>')
+                            $city.append(html)
+                        } else if (status === 0) {
+                            alert(error)
+                        }
+                    })
+                } else {
+                    $city.html('<option value=\'0\'>请选择城市</option>')
+                }
+            })
+            // 当市级选择框变化时
+            $city.change(() => {
+                let province = $province.val()
+                let city = $city.val()
+                if (city !== '0') {
+                    $.get('http://127.0.0.1:3000/get_counts_by_city_and_province', {
+                        province,
+                        city
+                    }, (result, text, xhr) => {
+                        let {status, data, error} = result
+                        if (status === 1) {
+                            let html = ''
+                            data.forEach((item, index) => {
+                                html += `<option value="${item.county}">${item.name}</option>`
+                            })
+                            $county.html('<option value=\'0\'>请选择城市</option>')
+                            $county.append(html)
+                        } else {
+                            alert(error)
+                        }
+                    })
+                } else {
+                    $county.html('<option value=\'0\'>请选择城市</option>')
+                }
+            })
+        })
+    </script>
+</body>
+</html>

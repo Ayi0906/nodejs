@@ -1,0 +1,23 @@
+{{extend './_layouts/template.html'}}
+{{block 'link'}}
+<div class="border border-dark rounded col-4 offset-4 p-2 mt-2">
+    没有账号？<a href="/register" class="stretched-link">点击注册</a>
+</div>
+{{/block}}
+{{block 'script'}}
+<script>
+    $('button[type=submit]').on('click', function (e) {
+        e.preventDefault()
+        let formData = $('#form1').serialize()
+        $.ajax({
+            url: '/login',
+            type: 'post',
+            data: formData,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+            }
+        })
+    })
+</script>
+{{/block}}
